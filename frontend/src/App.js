@@ -1638,17 +1638,18 @@ const CoachDashboard = ({ t, lang, onBack, onLogout }) => {
                 </div>
               )}
               
-              {/* Mobile-friendly scrollable table */}
-              <div className="overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+              {/* Scrollable campaign history table with fixed max height */}
+              <div className="overflow-x-auto overflow-y-auto rounded-lg border border-purple-500/20" 
+                   style={{ maxHeight: '400px', WebkitOverflowScrolling: 'touch' }}>
                 <table className="w-full min-w-[700px]">
-                  <thead>
+                  <thead className="sticky top-0 bg-black z-10">
                     <tr className="text-left text-white text-sm opacity-70 border-b border-purple-500/30">
-                      <th className="pb-3 pr-4">Campagne</th>
-                      <th className="pb-3 pr-4">Contacts</th>
-                      <th className="pb-3 pr-4">Canaux</th>
-                      <th className="pb-3 pr-4">Statut</th>
-                      <th className="pb-3 pr-4">Date programmée</th>
-                      <th className="pb-3">Actions</th>
+                      <th className="pb-3 pt-2 pr-4 bg-black">Campagne</th>
+                      <th className="pb-3 pt-2 pr-4 bg-black">Contacts</th>
+                      <th className="pb-3 pt-2 pr-4 bg-black">Canaux</th>
+                      <th className="pb-3 pt-2 pr-4 bg-black">Statut</th>
+                      <th className="pb-3 pt-2 pr-4 bg-black">Date programmée</th>
+                      <th className="pb-3 pt-2 bg-black">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
