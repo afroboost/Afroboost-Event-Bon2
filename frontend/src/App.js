@@ -353,10 +353,14 @@ const FolderIcon = () => (
   </svg>
 );
 
-// Splash Screen
-const SplashScreen = () => (
-  <div className="splash-screen">
-    <div className="splash-headset">🎧</div>
+// Splash Screen - Pure Black with configurable logo
+const SplashScreen = ({ logoUrl }) => (
+  <div className="splash-screen" style={{ background: '#000000' }}>
+    {logoUrl ? (
+      <img src={logoUrl} alt="Afroboost" className="splash-logo" />
+    ) : (
+      <div className="splash-headset">🎧</div>
+    )}
     <div className="splash-text">Afroboost</div>
   </div>
 );
@@ -388,18 +392,38 @@ const LanguageSelector = ({ lang, setLang }) => {
   );
 };
 
-// Media Display Component (YouTube, Vimeo, Image, Video)
+// Media Display Component (YouTube, Vimeo, Image, Video) - Strict 16:9 ratio
 const MediaDisplay = ({ url, className }) => {
   const media = parseMediaUrl(url);
   if (!media) return null;
 
+  // 16:9 container wrapper
+  const containerStyle = {
+    position: 'relative',
+    width: '100%',
+    paddingBottom: '56.25%', // 16:9 ratio
+    overflow: 'hidden',
+    borderRadius: '16px',
+    border: '1px solid rgba(217, 28, 210, 0.3)',
+    boxShadow: '0 0 30px rgba(217, 28, 210, 0.2)',
+    background: '#000'
+  };
+
+  const contentStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%'
+  };
+
   if (media.type === 'youtube') {
     return (
-      <div className={className}>
+      <div className={className} style={containerStyle} data-testid="media-container-16-9">
         <iframe 
           src={`https://www.youtube.com/embed/${media.id}?autoplay=1&mute=1&loop=1&playlist=${media.id}`}
           frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen
-          style={{ width: '100%', height: '100%', minHeight: '300px' }}
+          style={contentStyle}
           title="YouTube video"
         />
       </div>
@@ -408,11 +432,11 @@ const MediaDisplay = ({ url, className }) => {
   
   if (media.type === 'vimeo') {
     return (
-      <div className={className}>
+      <div className={className} style={containerStyle} data-testid="media-container-16-9">
         <iframe 
           src={`https://player.vimeo.com/video/${media.id}?autoplay=1&muted=1&loop=1&background=1`}
           frameBorder="0" allow="autoplay" allowFullScreen
-          style={{ width: '100%', height: '100%', minHeight: '300px' }}
+          style={contentStyle}
           title="Vimeo video"
         />
       </div>
@@ -421,31 +445,61 @@ const MediaDisplay = ({ url, className }) => {
   
   if (media.type === 'video') {
     return (
-      <div className={className}>
-        <video src={media.url} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+      <div className={className} style={containerStyle} data-testid="media-container-16-9">
+        <video src={media.url} autoPlay loop muted playsInline style={{ ...contentStyle, objectFit: 'cover' }} />
       </div>
     );
   }
   
   return (
-    <div className={className}>
-      <img src={media.url} alt="Media" className="w-full h-full object-cover" />
+    <div className={className} style={containerStyle} data-testid="media-container-16-9">
+      <img src={media.url} alt="Media" style={{ ...contentStyle, objectFit: 'cover' }} />
     </div>
   );
 };
 
-// Offer Card - Clean Design with Full Image
+// Info Icon Component
+const InfoIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="12" y1="16" x2="12" y2="12"/>
+    <line x1="12" y1="8" x2="12.01" y2="8"/>
+  </svg>
+);
+
+// Offer Card - Clean Design with Full Image + Info Icon
 const OfferCard = ({ offer, selected, onClick }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
   const defaultImage = "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=200&fit=crop";
   
   return (
     <div onClick={onClick} className={`offer-card rounded-xl overflow-hidden ${selected ? 'selected' : ''}`} data-testid={`offer-card-${offer.id}`}>
-      <img 
-        src={offer.thumbnail || defaultImage} 
-        alt={offer.name} 
-        className="offer-card-image"
-        onError={(e) => { e.target.src = defaultImage; }}
-      />
+      <div style={{ position: 'relative' }}>
+        <img 
+          src={offer.thumbnail || defaultImage} 
+          alt={offer.name} 
+          className="offer-card-image"
+          onError={(e) => { e.target.src = defaultImage; }}
+        />
+        {/* Info Icon - Only show if description exists */}
+        {offer.description && (
+          <div 
+            className="offer-info-btn"
+            onClick={(e) => { e.stopPropagation(); setShowTooltip(!showTooltip); }}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+            data-testid={`offer-info-${offer.id}`}
+          >
+            <InfoIcon />
+          </div>
+        )}
+        {/* Tooltip */}
+        {showTooltip && offer.description && (
+          <div className="offer-tooltip" data-testid={`offer-tooltip-${offer.id}`}>
+            {offer.description}
+          </div>
+        )}
+      </div>
       <div className="offer-card-content">
         <h3 className="font-semibold text-white text-sm">{offer.name}</h3>
         <span className="font-bold" style={{ color: '#d91cd2', fontSize: '18px' }}>CHF {offer.price}.-</span>
