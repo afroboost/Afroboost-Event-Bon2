@@ -216,7 +216,11 @@ const CoachDashboard = ({ config, onBack, onLogout }) => {
     } catch (err) {
       console.error("Error fetching coach data:", err);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const exportUsersCSV = () => {
     const rows = [
