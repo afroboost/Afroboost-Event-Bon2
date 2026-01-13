@@ -2525,6 +2525,17 @@ function App() {
         )}
 
         <footer className="mt-12 mb-8 text-center" style={{ opacity: 0.3 }}>
+          {/* Install app link - always visible for users who dismissed banner */}
+          {(installPrompt || isIOS) && !window.matchMedia('(display-mode: standalone)').matches && (
+            <button 
+              onClick={handleInstallClick}
+              className="text-xs mb-2 block mx-auto hover:opacity-80"
+              style={{ color: '#d91cd2' }}
+              data-testid="footer-install-link"
+            >
+              📲 Installer Afroboost
+            </button>
+          )}
           <span onClick={handleCopyrightClick} className="copyright-secret text-white text-xs" data-testid="copyright-secret">{t('copyright')}</span>
         </footer>
       </div>
