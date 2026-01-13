@@ -1234,7 +1234,9 @@ function App() {
                   </>
                 )}
                 <input type="text" placeholder={t('promoCode')} value={discountCode} onChange={e => setDiscountCode(e.target.value)}
-                  className="w-full p-3 rounded-lg neon-input" style={{ borderColor: appliedDiscount ? '#22c55e' : 'rgba(139, 92, 246, 0.5)' }} data-testid="discount-code-input" />
+                  className={`w-full p-3 rounded-lg ${appliedDiscount ? 'valid-code' : 'neon-input'}`}
+                  style={{ borderColor: appliedDiscount ? '#22c55e' : 'rgba(139, 92, 246, 0.5)', boxShadow: appliedDiscount ? '0 0 15px rgba(34, 197, 94, 0.4)' : 'none' }}
+                  data-testid="discount-code-input" />
                 {validationMessage && <p className="text-red-500 text-sm font-bold" data-testid="validation-message">{validationMessage}</p>}
                 
                 <div className="p-4 rounded-lg" style={{ background: 'rgba(217, 28, 210, 0.1)', borderLeft: '4px solid #d91cd2' }}>
