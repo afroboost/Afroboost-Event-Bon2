@@ -1178,23 +1178,29 @@ function App() {
 
   useEffect(() => { localStorage.setItem("af_lang", lang); }, [lang]);
 
-  useEffect(() => {
-    let mounted = true;
-    const fetchData = async () => {
-      try {
-        const [crs, off, usr, lnk, cpt, cds] = await Promise.all([
-          axios.get(`${API}/courses`), axios.get(`${API}/offers`), axios.get(`${API}/users`),
-          axios.get(`${API}/payment-links`), axios.get(`${API}/concept`), axios.get(`${API}/discount-codes`)
-        ]);
-        if (mounted) {
-          setCourses(crs.data); setOffers(off.data); setUsers(usr.data);
-          setPaymentLinks(lnk.data); setConcept(cpt.data); setDiscountCodes(cds.data);
-        }
-      } catch (err) { console.error("Error:", err); }
-    };
-    fetchData();
-    return () => { mounted = false; };
+  // Fonction pour charger les données
+  const fetchData = useCallback(async () => {
+    try {
+      const [crs, off, usr, lnk, cpt, cds] = await Promise.all([
+        axios.get(`${API}/courses`), axios.get(`${API}/offers`), axios.get(`${API}/users`),
+        axios.get(`${API}/payment-links`), axios.get(`${API}/concept`), axios.get(`${API}/discount-codes`)
+      ]);
+      setCourses(crs.data); setOffers(off.data); setUsers(usr.data);
+      setPaymentLinks(lnk.data); setConcept(cpt.data); setDiscountCodes(cds.data);
+    } catch (err) { console.error("Error:", err); }
   }, []);
+
+  // Charger les données au démarrage
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // Recharger les données quand on sort du Mode Coach
+  useEffect(() => {
+    if (!coachMode) {
+      fetchData();
+    }
+  }, [coachMode, fetchData]);
 
   // Update favicon dynamically when logoUrl changes
   useEffect(() => {
