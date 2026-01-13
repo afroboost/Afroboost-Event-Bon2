@@ -1,0 +1,156 @@
+<analysis>**original_problem_statement:**
+L'utilisateur souhaite créer une application nommée Afroboost pour la réservation de casques audio pour des cours de fitness. La demande initiale était de construire l'application à partir d'un fichier HTML/React fourni, en respectant un design sombre et néon. Les exigences ont évolué pour inclure un mode coach avancé, un système de code promo robuste, et récemment, un gestionnaire de campagnes marketing.
+
+**PRODUCT REQUIREMENTS:**
+1.  **Système de Réservation Principal:** Les utilisateurs doivent pouvoir sélectionner un cours, une date, une offre, saisir leurs informations et réserver.
+2.  **Design Sombre & Néon:** L'application doit avoir un fond noir pur (#000000) avec des éléments d'interface utilisant des couleurs néon (rose/violet) et des effets de lueur.
+3.  **Mode Coach Secret:** Un panneau d'administration caché, accessible par 3 clics rapides sur le copyright, protégé par un login.
+4.  **Gestion Administrative (Mode Coach):**
+    *   **Tableau de bord:** Voir les réservations et les exporter en CSV.
+    *   **Gestion du Contenu:** Modifier le concept, le média d'accueil (image/vidéo), le logo et le favicon.
+    *   **Gestion des Cours & Offres:** Modifier les détails et contrôler la visibilité.
+    *   **Gestion des Paiements:** Configurer les liens de paiement.
+    *   **Gestion des Codes Promo:** Créer et gérer des codes promo.
+    *   **Gestion des Campagnes (Nouveau):** Créer, programmer et envoyer des campagnes marketing multi-canaux (WhatsApp, Email, Instagram) aux clients.
+5.  **Internationalisation (i18n):** Changer la langue (FR, EN, DE) instantanément.
+6.  **Paiement et Notifications:** Le prix total doit se mettre à jour en temps réel avec les codes promo. Le bouton de paiement est dynamique (change pour une réservation gratuite si le total est de 0).
+
+**User's preferred language**: Français
+
+**what currently exists?**
+Une application full-stack avec un frontend React monolithique () et un backend FastAPI (). Le backend fonctionne comme une maquette (mock), utilisant des listes en mémoire au lieu d'une base de données persistante, ce qui signifie que toutes les données sont perdues à chaque redémarrage du serveur. L'application inclut un flux de réservation, un mode coach complet avec des onglets pour gérer le contenu, les cours, les offres, les codes promo, et un nouveau module de gestion de campagnes.
+
+**Last working item**:
+-   **Last item agent was working:** Correction de bugs critiques dans le module Gestionnaire de Campagnes nouvellement créé. L'objectif était de rendre les envois de messages fonctionnels (en particulier pour WhatsApp), d'ajouter des journaux d'erreurs visibles et de permettre la programmation d'une même campagne sur plusieurs dates.
+-   **Status:** IN PROGRESS
+-   **Agent Testing Done:** N
+-   **Which testing method agent to use?** both
+-   **User Testing Done:** N
+
+**All Pending/In progress Issue list**:
+-   **Issue 1:** Les messages du module de campagnes ne sont pas reçus par les clients. (Priorité: P0)
+-   **Issue 2:** Le module de campagnes ne prend en charge que la programmation à une seule date. (Priorité: P0)
+
+**Issues Detail:**
+-   **Issue 1: Messages de campagne non reçus et absence de logs d'erreurs**
+    -   **Attempted fixes:** L'agent a commencé à modifier la logique backend et frontend. Le modèle de données  dans  a été mis à jour pour inclure  et . La fonction  dans  a été modifiée pour mieux nettoyer les numéros de téléphone.
+    -   **Next debug checklist:**
+        1.  Dans , vérifier la fonction  pour s'assurer qu'elle génère des liens WhatsApp corrects, y compris l'URL du média à la fin du message pour activer l'aperçu.
+        2.  Tester de manière approfondie le formatage des numéros de téléphone (gestion des indicatifs de pays).
+        3.  Implémenter l'affichage du champ  dans le tableau de l'historique des campagnes pour que le coach puisse voir les erreurs d'envoi.
+    -   **Why fix this issue and what will be achieved with the fix?** Le gestionnaire de campagnes est actuellement inutilisable. Ce correctif le rendra fonctionnel et fournira des diagnostics en cas d'échec.
+    -   **Status:** IN PROGRESS
+    -   **Is recurring issue?** N
+    -   **Should Test frontend/backend/both after fix?** both
+-   **Issue 2: Programmation multi-dates pour les campagnes**
+    -   **Attempted fixes:** L'agent a modifié l'interface utilisateur dans  pour permettre l'ajout de plusieurs slots de date/heure. Le backend ( dans ) a été mis à jour pour créer des entrées de campagne distinctes pour chaque date programmée.
+    -   **Next debug checklist:**
+        1.  Tester de bout en bout la création d'une campagne avec plusieurs dates pour s'assurer que plusieurs entrées sont correctement créées et affichées dans l'historique.
+        2.  Vérifier que l'interface utilisateur pour ajouter et supprimer des dates est intuitive et sans bug.
+    -   **Why fix this issue and what will be achieved with the fix?** Pour répondre à une exigence explicite de l'utilisateur qui souhaite plus de flexibilité dans la planification des campagnes.
+    -   **Status:** IN PROGRESS
+    -   **Is recurring issue?** N
+    -   **Should Test frontend/backend/both after fix?** both
+
+**In progress Task List**:
+-   **Task 1: Finaliser les correctifs du Gestionnaire de Campagnes**
+    -   **Where to resume:** Le code a été modifié dans  et . La prochaine étape consiste à tester rigoureusement les envois WhatsApp, la programmation multi-dates et l'affichage des logs d'erreurs.
+    -   **What will be achieved with this?** Un module de campagnes entièrement fonctionnel qui envoie des messages, permet une planification flexible et fournit des retours d'information sur les erreurs.
+    -   **Status:** IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?** both
+
+**Upcoming and Future Tasks**
+*   **P1: Migration de la persistance des données vers une base de données réelle (MongoDB)**
+    *   C'est la dette technique la plus critique. Le backend est une maquette qui perd toutes ses données à chaque redémarrage. Il faut le connecter à une instance MongoDB pour rendre l'application persistante et prête pour la production.
+*   **P2: Refactorisation du fichier monolithique **
+    *   Le fichier  est devenu excessivement volumineux et difficile à maintenir. Il doit être décomposé en composants React plus petits et spécialisés (ex: , , ).
+*   **P3: Implémenter l'envoi par Email et Instagram pour les Campagnes**
+    *   L'interface existe, mais la logique d'envoi pour ces canaux n'est pas implémentée. Il faudra générer des liens  et  fonctionnels.
+
+**Completed work in this session**
+-   **Création du module Gestionnaire de Campagnes de A à Z :** Implémentation du backend (modèles, API) et du frontend (nouvel onglet, formulaire de création, tableau de suivi, aperçu visuel).
+-   **Correction complète du système de Codes Promo :** La logique est maintenant insensible à la casse, gère les espaces, met à jour le total en temps réel, fournit des messages de feedback clairs et rend le bouton de paiement dynamique (se transforme en Réserver pour les réductions de 100%).
+-   **Mise en place de la mémorisation du client :** Les informations du client sont sauvegardées dans  après une réservation pour pré-remplir le formulaire lors des visites suivantes.
+-   **Activation des interrupteurs de visibilité :** Les boutons pour masquer/afficher les cours et les offres dans le Mode Coach sont maintenant fonctionnels et filtrent correctement les éléments côté client.
+-   **Ajout d'un champ pour le Favicon :** Le favicon de l'application est maintenant configurable depuis le Mode Coach.
+-   **Corrections critiques de l'interface :** Le lecteur vidéo YouTube a été rendu étanche pour empêcher les utilisateurs de quitter le site, et de nombreux bugs liés à l'affichage et à la sauvegarde des données ont été résolus.
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **Frontend:** React (via CDN), TailwindCSS, .
+-   **Backend:** FastAPI (Python), servant actuellement de mock API.
+-   **Architecture:** SPA (Single Page Application) avec une dette technique majeure : absence de base de données persistante et un frontend monolithique.
+
+**key DB schema**
+Les données sont actuellement en mémoire. Le schéma prévu pour MongoDB est le suivant :
+-   : 
+-   : 
+-   : 
+-   : 
+-   : 
+-   : 
+
+**All files of reference**
+-   : Le fichier principal contenant toute la logique frontend.
+-   : Le fichier contenant toute la logique backend et les endpoints d'API.
+
+**Areas that need refactoring**
+-   **Monolithe :** Ce fichier de plus de 2000 lignes doit être décomposé de manière urgente en composants plus petits pour améliorer la maintenabilité.
+-   **Persistance des données:** L'ensemble du backend doit être migré d'une solution en mémoire vers une véritable base de données MongoDB pour que l'application soit viable.
+
+**key api endpoints**
+-    (GET, POST): Gérer les campagnes marketing.
+-    (GET, PUT): Gérer les cours.
+-    (GET, POST, PUT): Gérer les offres.
+-    (POST): Valider un code promo.
+-    (GET, PUT): Gérer la configuration du site.
+-    (GET, POST): Gérer les réservations.
+
+**Critical Info for New Agent**
+-   **Toute communication doit être en français.**
+-   **LES DONNÉES NE SONT PAS PERSISTANTES.** Le backend utilise des listes en mémoire. Toutes les données (utilisateurs, réservations, campagnes) sont effacées à chaque redémarrage du serveur. C'est la plus grande faiblesse de l'application.
+-   **Le fichier  est un monolithe.** Soyez prêt à naviguer et à modifier un fichier très volumineux.
+-   **Accès au Mode Coach :** 3 clics rapides sur le texte du copyright © Afroboost 2026 dans le pied de page.
+    -   **Email :** 
+    -   **Mot de passe :** 
+
+**documents and test reports created in this job**
+-   
+-   
+
+**Last 10 User Messages and any pending HUMAN messages**
+1.  **Utilisateur (en attente):** Demande des correctifs pour le module Campagnes : réparer l'envoi de messages WhatsApp, ajouter des logs d'erreurs et permettre la programmation multi-dates. (EN COURS)
+2.  **Agent:** Valide la proposition de l'utilisateur pour le module Campagnes et procède à l'implémentation.
+3.  **Utilisateur:** Valide la proposition de l'agent et demande l'implémentation du module Campagnes. (IMPLÉMENTÉ)
+4.  **Agent:** Propose un schéma de données et une maquette d'interface pour le module Campagnes.
+5.  **Utilisateur:** Demande la création d'un module Gestionnaire de Campagnes. (IMPLÉMENTÉ)
+6.  **Agent:** Confirme que la fonctionnalité de favicon est terminée.
+7.  **Utilisateur:** Demande l'ajout d'un champ pour configurer l'URL du favicon. (TERMINÉ)
+8.  **Agent:** Confirme que les interrupteurs de visibilité sont fonctionnels.
+9.  **Utilisateur:** Demande de rendre fonctionnels les interrupteurs de visibilité pour les cours et les offres. (TERMINÉ)
+10. **Agent:** Confirme que le système de code promo est entièrement réparé.
+
+**Project Health Check:**
+-   **Broken:** La couche de persistance des données est inexistante. Le backend est une maquette utilisant des listes en mémoire, ce qui rend l'application non viable pour une utilisation réelle.
+-   **Mocked:** Tous les endpoints d'API interagissent avec des données en mémoire, pas une vraie base de données.
+
+**3rd Party Integrations**
+-   Aucune intégration active. Des liens vers Stripe/PayPal/Twint sont prévus. Le module Campagnes a une logique de base pour générer des liens WhatsApp.
+
+**Testing status**
+-   **Testing agent used after significant changes:** YES
+-   **Troubleshoot agent used after agent stuck in loop:** NO
+-   **Test files created:** None
+-   **Known regressions:** None
+
+**Credentials to test flow:**
+-   **Accès Coach:**
+    -   **Déclencheur:** 3 clics rapides sur le copyright en pied de page.
+    -   **Email:** 
+    -   **Mot de passe:** 
+
+**What agent forgot to execute**
+-   La tâche la plus importante et la plus attendue reste la migration de la persistance des données d'une maquette en mémoire vers une véritable base de données MongoDB.
+-   La refactorisation du fichier monolithique  est également une tâche critique non encore entreprise.</analysis>
