@@ -287,6 +287,10 @@ const translations = {
     discount: "Rabatt",
     sunday: "Sonntag", monday: "Montag", tuesday: "Dienstag", wednesday: "Mittwoch",
     thursday: "Donnerstag", friday: "Freitag", saturday: "Samstag",
+    logoUrl: "Logo-URL (Splash Screen & PWA)",
+    offerDescription: "Beschreibung (\"i\" Symbol)",
+    confirmDelete: "Diesen Code löschen?",
+    delete: "Löschen",
   }
 };
 
