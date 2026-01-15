@@ -98,6 +98,34 @@ Application de réservation de casques audio pour des cours de fitness Afroboost
 - Frontend: Toutes les fonctionnalités vérifiées
 - Tests spécifiques campagnes: 8/8 passés
 
+### Corrections Bug Fixes (15 Jan 2026)
+1. ✅ **Scanner QR amélioré**:
+   - Test direct de la caméra avant initialisation html5-qrcode
+   - Indicateur de chargement pendant l'initialisation
+   - Messages d'erreur plus clairs avec bouton "Réessayer"
+   - Fallback robuste vers saisie manuelle
+   
+2. ✅ **Icône "i" sur les offres**:
+   - Cercle rose visible sur les offres avec descriptions
+   - Panneau de description s'affiche au clic
+   - Bouton de fermeture (×) pour revenir à l'image
+
+3. ✅ **Badges de statut**:
+   - "✅ Validé" avec fond vert
+   - "⏳ En attente" avec fond jaune
+   - Affichés dans le tableau des réservations
+
+4. ✅ **Slider horizontal des offres**:
+   - Effet LED néon rose (#d91cd2) sur l'offre sélectionnée
+   - Badge "✓ Sélectionné" visible
+   - Scroll horizontal avec scrollbar stylisée
+
+5. ✅ **Rich Preview (Open Graph)**:
+   - Meta tags og:title, og:description, og:image ajoutés
+   - Image og-image.png générée (1.3MB)
+   - Twitter Card meta tags ajoutés
+   - Aperçu riche pour partage WhatsApp/Instagram
+
 ---
 
 ## Technical Architecture
