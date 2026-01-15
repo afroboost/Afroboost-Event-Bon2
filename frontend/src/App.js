@@ -1748,6 +1748,12 @@ const CoachDashboard = ({ t, lang, onBack, onLogout }) => {
   const [selectedContactsForCampaign, setSelectedContactsForCampaign] = useState([]);
   const [contactSearchQuery, setContactSearchQuery] = useState("");
   const [campaignLogs, setCampaignLogs] = useState([]); // Error logs
+  
+  // === ENVOI DIRECT STATE ===
+  const [directSendMode, setDirectSendMode] = useState(false);
+  const [currentWhatsAppIndex, setCurrentWhatsAppIndex] = useState(0);
+  const [instagramProfile, setInstagramProfile] = useState("afroboost"); // Profil Instagram par défaut
+  const [messageCopied, setMessageCopied] = useState(false);
 
   // Add schedule slot
   const addScheduleSlot = () => {
