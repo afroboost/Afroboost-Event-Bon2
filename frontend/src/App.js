@@ -3490,7 +3490,7 @@ function App() {
                 <input type="tel" required placeholder={t('whatsappRequired')} value={userWhatsapp} onChange={e => setUserWhatsapp(e.target.value)} className="w-full p-3 rounded-lg neon-input" data-testid="user-whatsapp-input" autoComplete="tel" />
                 
                 {/* Champ Adresse - Affiché uniquement pour les produits physiques */}
-                {selectedOffer?.isProduct && (
+                {(selectedOffer?.isProduct || selectedOffer?.isPhysicalProduct) && (
                   <div className="border border-purple-500/30 rounded-lg p-3 bg-purple-900/20">
                     <p className="text-xs text-purple-400 mb-2">📦 Produit physique - Adresse de livraison requise</p>
                     <input 
