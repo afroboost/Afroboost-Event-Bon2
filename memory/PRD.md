@@ -338,6 +338,11 @@ Application de réservation de casques audio pour des cours de fitness Afroboost
   - **Sélecteur admin "📍 Section d'atterrissage"** : Dans Concept & Visuel avec options Sessions/Offres/Shop
   - **Scroll automatique** : Au chargement, scroll fluide vers la section configurée dans MongoDB
   - **Recherche fonctionnelle** : Filtre en temps réel par titre des offres/produits
+- [x] **Liens Externes, Paiements & Fix Sauvegarde (15 Jan 2026)**:
+  - **🔗 Liens Externes** : 2 champs (titre + URL) dans Concept & Visuel, affichés en boutons en bas de page côté client
+  - **💳 Modes de paiement** : Checkboxes Twint, PayPal, Carte de Crédit dans l'admin
+  - **Icônes paiement** : Rectangle pied de page avec icônes des paiements cochés (🔵 Twint, 🅿️ PayPal, 💳 Carte)
+  - **Sauvegarde fonctionnelle** : Backend mis à jour avec nouveaux champs dans modèle Concept
 
 ### P1 - À faire
 - [ ] Continuer refactoring: Extraire CoachDashboard, CoachLoginModal dans composants séparés
