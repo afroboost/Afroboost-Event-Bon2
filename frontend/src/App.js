@@ -5189,6 +5189,9 @@ function App() {
           )}
           <span onClick={handleCopyrightClick} className="copyright-secret text-white text-xs" data-testid="copyright-secret">{t('copyright')}</span>
         </footer>
+        
+        {/* Indicateur de scroll pour les nouveaux utilisateurs */}
+        <ScrollIndicator show={showScrollIndicator && !coachMode && !showSplash} />
       </div>
     </div>
   );
