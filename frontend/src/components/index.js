@@ -11,7 +11,9 @@ export { QRScannerModal } from './QRScanner';
 export { 
   NavigationBar, 
   useNavigation, 
-  LandingSectionSelector 
+  LandingSectionSelector,
+  ScrollIndicator,
+  useScrollIndicator
 } from './SearchBar';
 
 // === CAMPAGNES ADMIN ===
