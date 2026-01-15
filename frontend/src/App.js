@@ -2829,6 +2829,7 @@ function App() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userWhatsapp, setUserWhatsapp] = useState("");
+  const [shippingAddress, setShippingAddress] = useState(""); // Adresse de livraison pour produits physiques
   const [discountCode, setDiscountCode] = useState("");
   const [hasAcceptedTerms, setHasAcceptedTerms] = useState(false);
   const [promoMessage, setPromoMessage] = useState({ type: '', text: '' }); // New: dedicated promo message
