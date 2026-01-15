@@ -54,6 +54,7 @@ class Offer(BaseModel):
     videoUrl: Optional[str] = ""
     description: Optional[str] = ""
     visible: bool = True
+    images: List[str] = []  # Support multi-images (max 5)
     # E-commerce fields
     category: Optional[str] = ""  # Ex: "service", "tshirt", "shoes", "supplement"
     isProduct: bool = False  # True = physical product, False = service/course
@@ -69,6 +70,7 @@ class OfferCreate(BaseModel):
     videoUrl: Optional[str] = ""
     description: Optional[str] = ""
     visible: bool = True
+    images: List[str] = []  # Support multi-images (max 5)
     # E-commerce fields
     category: Optional[str] = ""
     isProduct: bool = False
