@@ -1099,10 +1099,12 @@ const QRScannerModal = ({ onClose, onValidate, scanResult, scanError, onManualVa
               ref={scannerRef}
               className="rounded-lg overflow-hidden mb-4"
               style={{ 
-                width: '100%', 
-                minHeight: scanning ? '280px' : '0px',
+                width: '300px', 
+                height: scanning ? '300px' : '0px',
+                minHeight: scanning ? '300px' : '0px',
                 background: scanning ? '#000' : 'transparent',
-                display: initializingCamera ? 'none' : 'block'
+                display: initializingCamera ? 'none' : 'block',
+                margin: '0 auto'
               }}
             />
             
@@ -1374,9 +1376,20 @@ const CoachDashboard = ({ t, lang, onBack, onLogout }) => {
   const addOffer = async (e) => {
     e.preventDefault();
     if (!newOffer.name) return;
-    const response = await axios.post(`${API}/offers`, newOffer);
-    setOffers([...offers, response.data]);
-    setNewOffer({ name: "", price: 0, visible: true, thumbnail: "", description: "" });
+    try {
+      // Support multi-images: parse URLs séparées par virgules
+      const offerData = {
+        ...newOffer,
+        thumbnail: newOffer.thumbnail ? newOffer.thumbnail.split(',')[0].trim() : '', // Première image comme thumbnail principal
+        images: newOffer.thumbnail ? newOffer.thumbnail.split(',').map(url => url.trim()).filter(url => url) : []
+      };
+      const response = await axios.post(`${API}/offers`, offerData);
+      setOffers(prevOffers => [...prevOffers, response.data]);
+      setNewOffer({ name: "", price: 0, visible: true, thumbnail: "", description: "", category: "service", isProduct: false, variants: null, tva: 0, shippingCost: 0, stock: -1 });
+    } catch (err) {
+      console.error("Erreur ajout offre:", err);
+      alert("Erreur lors de l'ajout de l'offre");
+    }
   };
 
   const toggleCourseSelection = (courseId) => {
