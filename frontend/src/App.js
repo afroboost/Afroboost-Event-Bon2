@@ -4914,29 +4914,54 @@ function App() {
           <MediaDisplay url={concept.heroImageUrl} className="hero-media-container mb-8" />
         )}
 
-        <div className="mb-8">
-          <h2 className="font-semibold mb-4 text-white" style={{ fontSize: '18px' }}>{t('chooseSession')}</h2>
-          <div className="space-y-4">
-            {visibleCourses.map(course => (
-              <div key={course.id} className={`course-card rounded-xl p-5 ${selectedCourse?.id === course.id ? 'selected' : ''}`} data-testid={`course-card-${course.id}`}>
-                <h3 className="font-semibold text-white">{course.name}</h3>
-                <div className="flex items-center gap-2 text-xs text-white opacity-60 mb-1">
-                  <LocationIcon />
-                  <span>{course.locationName}</span>
-                  {course.mapsUrl && (
-                    <a href={course.mapsUrl} target="_blank" rel="noopener noreferrer" className="ml-2 flex items-center gap-1" style={{ color: '#8b5cf6' }}
-                      onClick={(e) => e.stopPropagation()}>
-                      <LocationIcon /> Maps
-                    </a>
-                  )}
-                </div>
-                {renderDates(course)}
-              </div>
-            ))}
-            {visibleCourses.length === 0 && (
-              <p className="text-center py-8 text-white opacity-50">Aucun cours disponible pour le moment</p>
-            )}
+        {/* Barre de Navigation avec Filtres et Recherche */}
+        <NavigationBar 
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          showSearch={true}
+        />
+
+        {/* Message si aucun résultat */}
+        {visibleOffers.length === 0 && visibleCourses.length === 0 && searchQuery.trim() && (
+          <div className="text-center py-8 mb-8 rounded-xl" style={{ background: 'rgba(139, 92, 246, 0.1)', border: '1px solid rgba(139, 92, 246, 0.3)' }}>
+            <p className="text-white opacity-70">🔍 Aucun résultat pour "{searchQuery}"</p>
+            <button 
+              onClick={() => { setSearchQuery(''); setActiveFilter('all'); }}
+              className="mt-3 px-4 py-2 rounded-lg text-sm"
+              style={{ background: 'rgba(217, 28, 210, 0.3)', color: '#fff' }}
+            >
+              Réinitialiser les filtres
+            </button>
           </div>
+        )}
+
+        {/* Section Sessions */}
+        <div id="sessions-section" className="mb-8">
+          {visibleCourses.length > 0 && (
+            <>
+              <h2 className="font-semibold mb-4 text-white" style={{ fontSize: '18px' }}>{t('chooseSession')}</h2>
+              <div className="space-y-4">
+                {visibleCourses.map(course => (
+                  <div key={course.id} className={`course-card rounded-xl p-5 ${selectedCourse?.id === course.id ? 'selected' : ''}`} data-testid={`course-card-${course.id}`}>
+                    <h3 className="font-semibold text-white">{course.name}</h3>
+                    <div className="flex items-center gap-2 text-xs text-white opacity-60 mb-1">
+                      <LocationIcon />
+                      <span>{course.locationName}</span>
+                      {course.mapsUrl && (
+                        <a href={course.mapsUrl} target="_blank" rel="noopener noreferrer" className="ml-2 flex items-center gap-1" style={{ color: '#8b5cf6' }}
+                          onClick={(e) => e.stopPropagation()}>
+                          <LocationIcon /> Maps
+                        </a>
+                      )}
+                    </div>
+                    {renderDates(course)}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         {selectedCourse && selectedDate && (
