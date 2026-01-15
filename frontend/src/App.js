@@ -2294,7 +2294,7 @@ function App() {
       offerId: selectedOffer.id, 
       offerName: selectedOffer.name,
       price: selectedOffer.price, 
-      quantity: 1, 
+      quantity: quantity, // Quantité sélectionnée
       totalPrice,
       discountCode: appliedDiscount?.code || null,
       discountType: appliedDiscount?.type || null,
