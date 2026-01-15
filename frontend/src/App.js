@@ -2092,9 +2092,11 @@ const CoachDashboard = ({ t, lang, onBack, onLogout }) => {
     }
   };
 
-  // Stats des contacts pour envoi
+  // Stats des contacts pour envoi - calcul direct sans fonction
   const contactStats = useMemo(() => {
-    const contacts = getContactsForDirectSend();
+    const contacts = newCampaign.targetType === "selected" 
+      ? allContacts.filter(c => selectedContactsForCampaign.includes(c.id))
+      : allContacts;
     return {
       total: contacts.length,
       withEmail: contacts.filter(c => c.email && c.email.includes('@')).length,
